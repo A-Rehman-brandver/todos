@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React, { useContext, useEffect } from "react"
 import { Grid } from "@mui/material"
 import Task from "../../common/task/Task"
 import { makeStyles } from "@mui/styles"
@@ -17,8 +17,12 @@ const useStyles = makeStyles((theme) => ({
 }))
 const MyDaysList = () => {
   const classes = useStyles()
-  const { getAllMyDayTasks } = useContext(TasksContext)
+  const { getAllMyDayTasks, resetSelectedTasks } = useContext(TasksContext)
   const tasksData = getAllMyDayTasks()
+
+  useEffect(() => {
+    resetSelectedTasks()
+  }, [])
   return (
     <Grid item xs={12} lg={7} className={classes.root}>
       <HeaderTitle title="My Days" />

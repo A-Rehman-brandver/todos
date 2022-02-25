@@ -8,6 +8,14 @@ let tasksData = [
     dueDate: "22-02-2022",
     isMyDay: false,
     isFav: true,
+    steps: [
+      {
+        step: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
+      },
+      {
+        step: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
+      },
+    ],
   },
   {
     id: "02",
@@ -15,6 +23,20 @@ let tasksData = [
     dueDate: "22-02-2022",
     isMyDay: false,
     isFav: false,
+    steps: [
+      {
+        step: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
+      },
+      {
+        step: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
+      },
+      {
+        step: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
+      },
+      {
+        step: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
+      },
+    ],
   },
   {
     id: "03",
@@ -22,6 +44,20 @@ let tasksData = [
     dueDate: null,
     isMyDay: true,
     isFav: true,
+    steps: [
+      {
+        step: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
+      },
+      {
+        step: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
+      },
+      {
+        step: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
+      },
+      {
+        step: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
+      },
+    ],
   },
   {
     id: "04",
@@ -36,6 +72,11 @@ let tasksData = [
     dueDate: null,
     isMyDay: true,
     isFav: true,
+    steps: [
+      {
+        step: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
+      },
+    ],
   },
 ]
 
@@ -63,9 +104,12 @@ const TasksContainer = ({ children }) => {
     let allMyTasks = tasksData.filter((task) => task.isMyDay === true)
     return allMyTasks
   }
-  useEffect(() => {
-    setSelectedTask(tasksData && tasksData?.length > 0 && tasksData[0])
-  }, [])
+  const resetSelectedTasks = () => {
+    setSelectedTask()
+  }
+  // useEffect(() => {
+  //   setSelectedTask(tasksData && tasksData?.length > 0 && tasksData[0])
+  // }, [])
 
   return (
     <TasksProvider
@@ -78,6 +122,7 @@ const TasksContainer = ({ children }) => {
         isFavHandler,
         addDiscriptionHandler,
         getAllMyDayTasks,
+        resetSelectedTasks,
       }}
     >
       {children}

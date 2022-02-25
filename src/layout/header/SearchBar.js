@@ -10,14 +10,14 @@ const useStyles = makeStyles((theme) => ({
     padding: "4px",
     display: "flex",
     alignItems: "center",
-    background: `${theme.palette.primary.light} !important`,
+    background: `#c3ddf7 `,
   },
   searchInput: {
-    color: `${theme.palette.primary.dark} !important`,
+    color: `${theme.palette.primary.dark} `,
   },
   searchInon: {
     padding: "8px",
-    color: `${theme.palette.primary.dark} !important`,
+    color: `${theme.palette.primary.dark} `,
   },
 }))
 

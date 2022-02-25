@@ -4,7 +4,6 @@ import Box from "@mui/material/Box"
 import MuiDrawer from "@mui/material/Drawer"
 import List from "@mui/material/List"
 import CssBaseline from "@mui/material/CssBaseline"
-import Typography from "@mui/material/Typography"
 import Divider from "@mui/material/Divider"
 import MenuIcon from "@mui/icons-material/Menu"
 import ListItem from "@mui/material/ListItem"
@@ -78,7 +77,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     padding: "32px",
     background: theme.palette.secondary.main,
-    height: "100vh",
+    height: "100vh !important",
   },
 }))
 

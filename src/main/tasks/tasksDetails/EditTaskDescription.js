@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react"
 import { makeStyles } from "@mui/styles"
-import { Button, Grid, Paper, TextField, Typography } from "@mui/material"
+import { Button, Grid, Paper, TextareaAutosize } from "@mui/material"
 import FlareIcon from "@mui/icons-material/Flare"
 import TasksContext from "../../../context/tasks/TasksContext"
 
@@ -29,6 +29,16 @@ const useStyles = makeStyles((theme) => ({
       fontSize: "15px",
     },
   },
+  textArea: {
+    width: "100%",
+    padding: "12px",
+    marginTop: "12px",
+    // border: "none",
+    outline: "none",
+    fontFamily: "Roboto, sans-serif",
+    fontSize: "15px",
+    height: "100px",
+  },
 }))
 
 const EditTaskDescription = () => {
@@ -37,6 +47,7 @@ const EditTaskDescription = () => {
 
   const [data, setData] = useState({
     dueDate: "",
+    note: "",
   })
   const onChangeHandler = (e) => {
     setData({ ...data, [e.target.name]: e.target.value })
@@ -66,10 +77,14 @@ const EditTaskDescription = () => {
           </Grid>
 
           <Grid item xs={12} display="flex" gap="12px" alignItems="flex-start">
-            <FlareIcon className={classes.icon} />
-            <Typography className={classes.divider} variant="subtitle1">
-              Remind
-            </Typography>
+            <TextareaAutosize
+              maxRows={7}
+              minRows={7}
+              placeholder="Notes ..."
+              className={classes.textArea}
+              name="note"
+              onChange={(e) => onChangeHandler(e)}
+            />
           </Grid>
           <Grid item xs={12} display="flex" gap="12px" alignItems="flex-start">
             <Button type="submit" variant="contained">

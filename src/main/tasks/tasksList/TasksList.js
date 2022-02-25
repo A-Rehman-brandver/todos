@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React, { useContext, useEffect } from "react"
 import { Grid } from "@mui/material"
 import Task from "../../../common/task/Task"
 import AddTasks from "./AddTasks"
@@ -18,7 +18,11 @@ const useStyles = makeStyles((theme) => ({
 }))
 const TasksList = () => {
   const classes = useStyles()
-  const { tasksData } = useContext(TasksContext)
+  const { tasksData, resetSelectedTasks } = useContext(TasksContext)
+
+  useEffect(() => {
+    resetSelectedTasks()
+  }, [])
 
   return (
     <Grid item xs={12} lg={7} className={classes.root}>

@@ -3,7 +3,6 @@ import { Grid } from "@mui/material"
 import Title from "./Title"
 import AddInMyDays from "./AddInMyDays"
 import EditTaskDescription from "./EditTaskDescription"
-import Note from "./Note"
 import TasksContext from "../../../context/tasks/TasksContext"
 
 const TasksDetails = () => {
@@ -16,7 +15,6 @@ const TasksDetails = () => {
           <Title data={selectTask} />
           <AddInMyDays data={selectTask} />
           <EditTaskDescription data={selectTask} />
-          <Note data={selectTask?.note} />
         </>
       )}
     </Grid>
