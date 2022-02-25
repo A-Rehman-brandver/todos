@@ -47,6 +47,22 @@ const TasksContainer = ({ children }) => {
     setSelectedTask(task)
   }
 
+  const addTaskHandler = (data) => {
+    console.log(data)
+  }
+  const addDiscriptionHandler = (data) => {
+    console.log(data)
+  }
+  const addMyDayHandler = (id) => {
+    console.log(id)
+  }
+  const isFavHandler = (id) => {
+    console.log(id)
+  }
+  const getAllMyDayTasks = (id) => {
+    let allMyTasks = tasksData.filter((task) => task.isMyDay === true)
+    return allMyTasks
+  }
   useEffect(() => {
     setSelectedTask(tasksData && tasksData?.length > 0 && tasksData[0])
   }, [])
@@ -57,6 +73,11 @@ const TasksContainer = ({ children }) => {
         tasksData,
         updateSelectedTask,
         selectTask,
+        addTaskHandler,
+        addMyDayHandler,
+        isFavHandler,
+        addDiscriptionHandler,
+        getAllMyDayTasks,
       }}
     >
       {children}

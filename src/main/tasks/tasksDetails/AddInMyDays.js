@@ -1,7 +1,8 @@
-import React from "react"
+import React, { useContext } from "react"
 import { makeStyles } from "@mui/styles"
 import { Grid, Paper, Typography } from "@mui/material"
 import FlareIcon from "@mui/icons-material/Flare"
+import TasksContext from "../../../context/tasks/TasksContext"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,12 +19,14 @@ const useStyles = makeStyles((theme) => ({
 
 const AddInMyDays = ({ data }) => {
   const classes = useStyles()
+  const { addMyDayHandler } = useContext(TasksContext)
 
   return (
     <Paper className={classes.root} elevation={0}>
       <Grid container justifyContent="space-between" alignItems="center">
         <Grid item xs={10} container gap="12px" alignItems="center">
           <FlareIcon
+            onClick={() => !data?.isMyDay && addMyDayHandler(data?.id)}
             className={`${classes.icon}   ${
               data?.isMyDay && classes.isMyDayActive
             }`}

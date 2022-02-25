@@ -1,10 +1,9 @@
 import React, { useContext } from "react"
 import { Grid } from "@mui/material"
-import Task from "../../../common/task/Task"
-import AddTasks from "./AddTasks"
+import Task from "../../common/task/Task"
 import { makeStyles } from "@mui/styles"
-import TasksContext from "../../../context/tasks/TasksContext"
-import HeaderTitle from "../../../common/headerTitle/HeaderTitle"
+import TasksContext from "../../context/tasks/TasksContext"
+import HeaderTitle from "../../common/headerTitle/HeaderTitle"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,13 +15,13 @@ const useStyles = makeStyles((theme) => ({
     overflowY: "auto",
   },
 }))
-const TasksList = () => {
+const MyDaysList = () => {
   const classes = useStyles()
-  const { tasksData } = useContext(TasksContext)
-
+  const { getAllMyDayTasks } = useContext(TasksContext)
+  const tasksData = getAllMyDayTasks()
   return (
     <Grid item xs={12} lg={7} className={classes.root}>
-      <HeaderTitle title="Tasks" />
+      <HeaderTitle title="My Days" />
       <div className={classes.TasksListing}>
         {tasksData?.length > 0
           ? tasksData?.map((task) => {
@@ -30,9 +29,8 @@ const TasksList = () => {
             })
           : "No Tasks Found"}
       </div>
-      <AddTasks />
     </Grid>
   )
 }
 
-export default TasksList
+export default MyDaysList

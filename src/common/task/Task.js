@@ -5,7 +5,7 @@ import CircleOutlinedIcon from "@mui/icons-material/CircleOutlined"
 import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined"
 import StarIcon from "@mui/icons-material/Star"
 import CircleIcon from "@mui/icons-material/Circle"
-import TasksContext from "../../../context/tasks/TasksContext"
+import TasksContext from "../../context/tasks/TasksContext"
 
 const useStyles = makeStyles((theme) => ({
   item: {
@@ -19,13 +19,13 @@ const useStyles = makeStyles((theme) => ({
 }))
 const List = ({ task }) => {
   const classes = useStyles()
-  const { selectTask, updateSelectedTask } = useContext(TasksContext)
+  const { selectTask, updateSelectedTask, isFavHandler } =
+    useContext(TasksContext)
+
   const taskIdHandler = (id) => {
     updateSelectedTask(id)
   }
-  const isFavHandler = (id) => {
-    console.log(id)
-  }
+
   return (
     <Paper elevation={0} className={classes.item}>
       <Grid container justifyContent="space-between" alignItems="center">

@@ -2,6 +2,7 @@ import React from "react"
 import { makeStyles } from "@mui/styles"
 import AddIcon from "@mui/icons-material/Add"
 import { Grid, Typography } from "@mui/material"
+import AddTaskModal from "./AddTaskModal"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -15,14 +16,16 @@ const useStyles = makeStyles((theme) => ({
 
 const AddTasks = () => {
   const classes = useStyles()
-  const addTaskHandler = () => {
-    console.log("------Task Added--------")
-  }
+  const [open, setOpen] = React.useState(false)
+
   return (
-    <Grid container xs={12} gap="12px" className={classes.root}>
-      <AddIcon className={classes.icon} onClick={() => addTaskHandler()} />
-      <Typography variant="subtitle1">AddTasks</Typography>
-    </Grid>
+    <>
+      <Grid container item xs={10} lg={12} gap="12px" className={classes.root}>
+        <AddIcon className={classes.icon} onClick={() => setOpen(true)} />
+        <Typography variant="subtitle1">AddTasks</Typography>
+      </Grid>
+      <AddTaskModal setOpen={setOpen} open={open} />
+    </>
   )
 }
 
