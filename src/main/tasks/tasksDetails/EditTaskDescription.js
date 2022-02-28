@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { makeStyles } from "@mui/styles"
 import { Button, Grid, Paper, TextareaAutosize } from "@mui/material"
 import FlareIcon from "@mui/icons-material/Flare"
@@ -41,13 +41,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const EditTaskDescription = () => {
+const EditTaskDescription = ({ data: TaskInfo }) => {
   const classes = useStyles()
   const { addDiscriptionHandler } = useContext(TasksContext)
 
   const [data, setData] = useState({
     dueDate: "",
-    note: "",
+    description: "",
   })
   const onChangeHandler = (e) => {
     setData({ ...data, [e.target.name]: e.target.value })
@@ -55,8 +55,15 @@ const EditTaskDescription = () => {
 
   const formSubmitAddDescriptionHandler = (e) => {
     e.preventDefault()
-    addDiscriptionHandler(data)
+    addDiscriptionHandler(data, TaskInfo?._id)
   }
+
+  useEffect(() => {
+    setData({
+      dueDate: TaskInfo?.dueDate ? TaskInfo?.dueDate : "",
+      description: TaskInfo?.description ? TaskInfo?.description : "",
+    })
+  }, [TaskInfo])
   return (
     <Paper className={classes.root} elevation={0}>
       <form onSubmit={(e) => formSubmitAddDescriptionHandler(e)}>
@@ -82,8 +89,9 @@ const EditTaskDescription = () => {
               minRows={7}
               placeholder="Notes ..."
               className={classes.textArea}
-              name="note"
+              name="description"
               onChange={(e) => onChangeHandler(e)}
+              value={data?.description}
             />
           </Grid>
           <Grid item xs={12} display="flex" gap="12px" alignItems="flex-start">

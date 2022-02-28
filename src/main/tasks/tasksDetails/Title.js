@@ -40,7 +40,13 @@ const Title = ({ data }) => {
           )}{" "}
         </Grid>
 
-        <Grid container xs={12} gap="12px" className={classes.stepsContainer}>
+        <Grid
+          container
+          item
+          xs={12}
+          gap="12px"
+          className={classes.stepsContainer}
+        >
           <AddIcon className={classes.icon} onClick={() => addStepsHandler()} />
           <Typography variant="subtitle1">Add Steps</Typography>
         </Grid>

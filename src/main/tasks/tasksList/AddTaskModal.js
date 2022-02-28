@@ -7,6 +7,7 @@ import TextField from "@mui/material/TextField"
 import { Grid } from "@mui/material"
 import { makeStyles } from "@mui/styles"
 import TasksContext from "../../../context/tasks/TasksContext"
+import { gql, useMutation } from "@apollo/client"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,6 +29,12 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AddTaskModal({ open, setOpen }) {
   const classes = useStyles()
+  const [createTask, { data: newTask, loading, error }] = useMutation(
+    CREATE_NEW_TASK,
+    {
+      refetchQueries: ["getAllTasks"],
+    }
+  )
   const { addTaskHandler } = useContext(TasksContext)
 
   const handleClose = () => setOpen(false)
@@ -39,11 +46,16 @@ export default function AddTaskModal({ open, setOpen }) {
     setData({ ...data, [e.target.name]: e.target.value })
   }
 
-  const formSubmitAddTaskHandler = (e) => {
-    e.preventDefault()
-    addTaskHandler(data)
-    handleClose()
-    setData({ taskName: "" })
+  const formSubmitAddTaskHandler = async (e) => {
+    try {
+      e.preventDefault()
+      // addTaskHandler(data)
+      await createTask({ variables: { task: { title: data.taskName } } })
+      handleClose()
+      setData({ taskName: "" })
+    } catch (error) {
+      console.log(error)
+    }
   }
   return (
     <div>
@@ -74,3 +86,20 @@ export default function AddTaskModal({ open, setOpen }) {
     </div>
   )
 }
+
+const CREATE_NEW_TASK = gql`
+  mutation createTask($task: TaskInput) {
+    createTask(task: $task) {
+      _id
+      title
+      description
+      dueDate
+      isFav
+      isMyDay
+      steps {
+        step
+        _id
+      }
+    }
+  }
+`

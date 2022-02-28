@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import { TasksProvider } from "./TasksContext"
+import { gql, useQuery, useMutation, useLazyQuery } from "@apollo/client"
 
 let tasksData = [
   {
@@ -81,48 +82,73 @@ let tasksData = [
 ]
 
 const TasksContainer = ({ children }) => {
-  const [selectTask, setSelectedTask] = useState()
+  let selectTask
+  const { loading, data, error } = useQuery(GET_ALL_TASKS, {
+    // fetchPolicy: "network-only",
+  })
+  const [getTask, { data: taskById, error: taskByIdError }] =
+    useLazyQuery(GET_TASK)
 
-  const updateSelectedTask = (id) => {
-    const task = tasksData.find((task) => task.id === id)
-    setSelectedTask(task)
+  const [updateTask] = useMutation(UPDATE_TASKS, {
+    refetchQueries: ["getAllTasks"],
+  })
+  // console.log(loading, data, error)
+
+  const updateSelectedTask = async (id) => {
+    try {
+      await getTask({ variables: { id } })
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   const addTaskHandler = (data) => {
     console.log(data)
   }
-  const addDiscriptionHandler = (data) => {
-    console.log(data)
+  const addDiscriptionHandler = async (data, id) => {
+    try {
+      await updateTask({ variables: { task: data, id } })
+      updateSelectedTask(id)
+    } catch (error) {
+      console.log(error)
+    }
   }
-  const addMyDayHandler = (id) => {
-    console.log(id)
+  const addMyDayHandler = async (id) => {
+    try {
+      await updateTask({ variables: { task: { isMyDay: true }, id } })
+      updateSelectedTask(id)
+    } catch (error) {
+      console.log(error)
+    }
   }
-  const isFavHandler = (id) => {
-    console.log(id)
+  const isFavHandler = async (id) => {
+    try {
+      await updateTask({ variables: { task: { isFav: true }, id } })
+    } catch (error) {
+      console.log(error)
+    }
   }
   const getAllMyDayTasks = (id) => {
     let allMyTasks = tasksData.filter((task) => task.isMyDay === true)
     return allMyTasks
   }
   const resetSelectedTasks = () => {
-    setSelectedTask()
+    selectTask = ""
   }
-  // useEffect(() => {
-  //   setSelectedTask(tasksData && tasksData?.length > 0 && tasksData[0])
-  // }, [])
-
   return (
     <TasksProvider
       value={{
-        tasksData,
+        tasksData: data?.getAllTasks,
         updateSelectedTask,
-        selectTask,
+        selectTask: taskById?.getTask,
         addTaskHandler,
         addMyDayHandler,
         isFavHandler,
         addDiscriptionHandler,
         getAllMyDayTasks,
         resetSelectedTasks,
+        loading,
+        error,
       }}
     >
       {children}
@@ -131,3 +157,53 @@ const TasksContainer = ({ children }) => {
 }
 
 export default TasksContainer
+
+const GET_ALL_TASKS = gql`
+  query getAllTasks {
+    getAllTasks {
+      _id
+      title
+      description
+      dueDate
+      isFav
+      isMyDay
+      steps {
+        step
+        _id
+      }
+    }
+  }
+`
+
+const UPDATE_TASKS = gql`
+  mutation updateTask($task: TaskUpdateInput, $id: ID!) {
+    updateTask(task: $task, id: $id) {
+      _id
+      title
+      description
+      dueDate
+      isFav
+      isMyDay
+      steps {
+        step
+        _id
+      }
+    }
+  }
+`
+const GET_TASK = gql`
+  query getTask($id: ID!) {
+    getTask(id: $id) {
+      _id
+      title
+      description
+      dueDate
+      isFav
+      isMyDay
+      steps {
+        step
+        _id
+      }
+    }
+  }
+`

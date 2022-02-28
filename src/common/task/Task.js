@@ -30,14 +30,14 @@ const List = ({ task }) => {
     <Paper elevation={0} className={classes.item}>
       <Grid container justifyContent="space-between" alignItems="center">
         <Grid
-          onClick={() => taskIdHandler(task?.id)}
+          onClick={() => taskIdHandler(task?._id)}
           item
           xs={10}
           container
           gap="12px"
           alignItems="center"
         >
-          {task?.id === selectTask?.id ? (
+          {task?._id === selectTask?._id ? (
             <CircleIcon />
           ) : (
             <CircleOutlinedIcon />
@@ -48,7 +48,7 @@ const List = ({ task }) => {
           item
           xs={2}
           textAlign="right"
-          onClick={() => isFavHandler(task?.id)}
+          onClick={() => isFavHandler(task?._id)}
         >
           {task?.isFav ? (
             <StarIcon className={classes.icon} />

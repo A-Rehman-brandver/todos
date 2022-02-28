@@ -26,7 +26,7 @@ const AddInMyDays = ({ data }) => {
       <Grid container justifyContent="space-between" alignItems="center">
         <Grid item xs={10} container gap="12px" alignItems="center">
           <FlareIcon
-            onClick={() => !data?.isMyDay && addMyDayHandler(data?.id)}
+            onClick={() => addMyDayHandler(data?._id)}
             className={`${classes.icon}   ${
               data?.isMyDay && classes.isMyDayActive
             }`}

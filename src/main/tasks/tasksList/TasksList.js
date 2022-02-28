@@ -5,6 +5,7 @@ import AddTasks from "./AddTasks"
 import { makeStyles } from "@mui/styles"
 import TasksContext from "../../../context/tasks/TasksContext"
 import HeaderTitle from "../../../common/headerTitle/HeaderTitle"
+import ErrorMessage from "../../../helpers/ErrorMessage"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,7 +19,8 @@ const useStyles = makeStyles((theme) => ({
 }))
 const TasksList = () => {
   const classes = useStyles()
-  const { tasksData, resetSelectedTasks } = useContext(TasksContext)
+  const { tasksData, resetSelectedTasks, loading, error } =
+    useContext(TasksContext)
 
   useEffect(() => {
     resetSelectedTasks()
@@ -28,11 +30,21 @@ const TasksList = () => {
     <Grid item xs={12} lg={7} className={classes.root}>
       <HeaderTitle title="Tasks" />
       <div className={classes.TasksListing}>
-        {tasksData?.length > 0
-          ? tasksData?.map((task) => {
-              return <Task task={task} key={task?.id} />
-            })
-          : "No Tasks Found"}
+        {loading ? (
+          "loading"
+        ) : (
+          <>
+            {error ? (
+              <ErrorMessage error={error} />
+            ) : tasksData?.length > 0 ? (
+              tasksData?.map((task) => {
+                return <Task task={task} key={task?._id} />
+              })
+            ) : (
+              "No Tasks Found"
+            )}
+          </>
+        )}
       </div>
       <AddTasks />
     </Grid>
