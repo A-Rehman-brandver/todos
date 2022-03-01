@@ -77,7 +77,10 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     padding: "32px",
     background: theme.palette.secondary.main,
-    height: "100vh !important",
+    height: "100vh ",
+  },
+  selected: {
+    color: theme.palette.primary.main,
   },
 }))
 
@@ -115,8 +118,13 @@ function SideDrawer({ children }) {
               key={route.key}
               selected={route.route === selectedIndex}
               onClick={() => handleListItemClick(route.route)}
+              className={route.route === selectedIndex && classes.selected}
             >
-              <ListItemIcon>{route.icon}</ListItemIcon>
+              <ListItemIcon
+                className={route.route === selectedIndex && classes.selected}
+              >
+                {route.icon}
+              </ListItemIcon>
               <ListItemText primary={route.title} />
             </ListItem>
           ))}

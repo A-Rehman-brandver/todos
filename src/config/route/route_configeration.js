@@ -2,7 +2,7 @@ import Login from "../../main/login/Login"
 import Tasks from "../../main/tasks/Tasks"
 import MyDay from "../../main/my_day/MyDay"
 import Category from "../../main/category/Category"
-
+import Search from "../../main/search/Search"
 export const routes = [
   {
     key: "login",
@@ -31,5 +31,12 @@ export const routes = [
     route: "/category",
     auth_required: true,
     component: Category,
+  },
+  {
+    key: "search",
+    title: "Search",
+    route: "/search",
+    auth_required: true,
+    component: Search,
   },
 ]

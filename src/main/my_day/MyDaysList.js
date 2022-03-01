@@ -4,6 +4,7 @@ import Task from "../../common/task/Task"
 import { makeStyles } from "@mui/styles"
 import TasksContext from "../../context/tasks/TasksContext"
 import HeaderTitle from "../../common/headerTitle/HeaderTitle"
+import ErrorMessage from "../../helpers/ErrorMessage"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,21 +18,32 @@ const useStyles = makeStyles((theme) => ({
 }))
 const MyDaysList = () => {
   const classes = useStyles()
-  const { getAllMyDayTasks, resetSelectedTasks } = useContext(TasksContext)
-  const tasksData = getAllMyDayTasks()
+  const { getAllMyDayTasks, resetSelectedTasks, myDaysError, myDaysLoading } =
+    useContext(TasksContext)
 
   useEffect(() => {
     resetSelectedTasks()
   }, [])
+
   return (
     <Grid item xs={12} lg={7} className={classes.root}>
       <HeaderTitle title="My Days" />
       <div className={classes.TasksListing}>
-        {tasksData?.length > 0
-          ? tasksData?.map((task) => {
-              return <Task task={task} key={task?.id} />
-            })
-          : "No Tasks Found"}
+        {myDaysLoading ? (
+          "Loading"
+        ) : (
+          <>
+            {myDaysError ? (
+              <ErrorMessage error={myDaysError} />
+            ) : getAllMyDayTasks?.length > 0 ? (
+              getAllMyDayTasks?.map((task) => {
+                return <Task task={task} key={task?.id} />
+              })
+            ) : (
+              "No Tasks Found"
+            )}
+          </>
+        )}
       </div>
     </Grid>
   )
