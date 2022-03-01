@@ -47,12 +47,17 @@ const Header = () => {
   const classes = useStyles()
 
   return (
-    <Grid container className={classes.root} alignItems="center">
+    <Grid
+      container
+      className={classes.root}
+      justifyContent="space-between"
+      alignItems="center"
+    >
       <Grid item xs={3} lg={2} className={classes.logoContainer}>
         <BorderClearIcon className={classes.icons} />
         <Typography variant="h6">Todos</Typography>
       </Grid>
-      <Grid item xs={7} lg={8} className={classes.searchBarContainer}>
+      <Grid item xs={7} lg={5} className={classes.searchBarContainer}>
         <SearchBar />
       </Grid>
       <Grid item xs={2} lg={2} className={classes.menuContainer}>

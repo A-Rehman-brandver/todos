@@ -1,11 +1,10 @@
 import React, { useContext, useEffect } from "react"
 import { Grid } from "@mui/material"
-import Task from "../../../common/task/Task"
-import AddTasks from "./AddTasks"
+import Task from "../../common/task/Task"
 import { makeStyles } from "@mui/styles"
-import TasksContext from "../../../context/tasks/TasksContext"
-import HeaderTitle from "../../../common/headerTitle/HeaderTitle"
-import ErrorMessage from "../../../helpers/ErrorMessage"
+import TasksContext from "../../context/tasks/TasksContext"
+import HeaderTitle from "../../common/headerTitle/HeaderTitle"
+import ErrorMessage from "../../helpers/ErrorMessage"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,9 +16,9 @@ const useStyles = makeStyles((theme) => ({
     overflowY: "auto",
   },
 }))
-const TasksList = () => {
+const MyDaysList = () => {
   const classes = useStyles()
-  const { tasksData, resetSelectedTasks, loading, error } =
+  const { getAllMyDayTasks, resetSelectedTasks, myDaysError, myDaysLoading } =
     useContext(TasksContext)
 
   useEffect(() => {
@@ -28,17 +27,17 @@ const TasksList = () => {
 
   return (
     <Grid item xs={12} lg={7} className={classes.root}>
-      <HeaderTitle title="Tasks" />
+      <HeaderTitle title="My Days" />
       <div className={classes.TasksListing}>
-        {loading ? (
-          "loading"
+        {myDaysLoading ? (
+          "Loading"
         ) : (
           <>
-            {error ? (
-              <ErrorMessage error={error} />
-            ) : tasksData?.length > 0 ? (
-              tasksData?.map((task) => {
-                return <Task task={task} key={task?._id} />
+            {myDaysError ? (
+              <ErrorMessage error={myDaysError} />
+            ) : getAllMyDayTasks?.length > 0 ? (
+              getAllMyDayTasks?.map((task) => {
+                return <Task task={task} key={task?.id} />
               })
             ) : (
               "No Tasks Found"
@@ -46,9 +45,8 @@ const TasksList = () => {
           </>
         )}
       </div>
-      <AddTasks />
     </Grid>
   )
 }
 
-export default TasksList
+export default MyDaysList

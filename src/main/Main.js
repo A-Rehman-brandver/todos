@@ -2,6 +2,7 @@ import React from "react"
 import { routes } from "../config/route/route_configeration"
 import { BrowserRouter as Router, Route } from "react-router-dom"
 import { PrivateRoute } from "../config/route/PrivateRoute"
+import NotFound from "./NotFound"
 
 const Main = () => {
   return (
@@ -27,6 +28,7 @@ const Main = () => {
           )
         }
       })}
+      {/* <Route component={NotFound} path="/*" /> */}
     </Router>
   )
 }

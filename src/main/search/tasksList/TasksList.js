@@ -19,8 +19,12 @@ const useStyles = makeStyles((theme) => ({
 }))
 const TasksList = () => {
   const classes = useStyles()
-  const { tasksData, resetSelectedTasks, loading, error } =
-    useContext(TasksContext)
+  const {
+    taskBySearch,
+    resetSelectedTasks,
+    taskBySearchLoading,
+    taskBySearchError,
+  } = useContext(TasksContext)
 
   useEffect(() => {
     resetSelectedTasks()
@@ -30,14 +34,14 @@ const TasksList = () => {
     <Grid item xs={12} lg={7} className={classes.root}>
       <HeaderTitle title="Tasks" />
       <div className={classes.TasksListing}>
-        {loading ? (
+        {taskBySearchLoading ? (
           "loading"
         ) : (
           <>
-            {error ? (
-              <ErrorMessage error={error} />
-            ) : tasksData?.length > 0 ? (
-              tasksData?.map((task) => {
+            {taskBySearchError ? (
+              <ErrorMessage error={taskBySearchError} />
+            ) : taskBySearch?.length > 0 ? (
+              taskBySearch?.map((task) => {
                 return <Task task={task} key={task?._id} />
               })
             ) : (
